@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>alarmclock</artifactId>
+    <groupId>org.nuclearzone</groupId>
+    <version>1.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>alarmclock-gui</artifactId>
+  <name>Alarm Clock GUI module</name>
+  <dependencies>
+  	<dependency>
+	    <groupId>com.miglayout</groupId>
+	    <artifactId>miglayout</artifactId>
+	    <version>${miglayout.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.nuclearzone</groupId>
+	    <artifactId>alarmclock-core</artifactId>
+	    <version>${project.version}</version>
+	</dependency>
+  </dependencies>
+  <build>
+    
+  	  <pluginManagement>
+		<plugins>
+		    <plugin>
+		        <groupId>org.eclipse.m2e</groupId>
+		        <artifactId>lifecycle-mapping</artifactId>
+		        <version>1.0.0</version>
+		        <configuration>
+		            <lifecycleMappingMetadata>
+		                <pluginExecutions>
+		                    <!-- copy-dependency plugin -->
+		                    <pluginExecution>
+		                        <pluginExecutionFilter>
+		                            <groupId>org.apache.maven.plugins</groupId>
+		                            <artifactId>maven-dependency-plugin</artifactId>
+		                            <versionRange>[1.0.0,)</versionRange>
+		                            <goals>
+		                                <goal>copy-dependencies</goal>
+		                            </goals>
+		                        </pluginExecutionFilter>
+		                        <action>
+		                            <ignore />
+		                        </action>
+		                    </pluginExecution>
+		                </pluginExecutions>
+		            </lifecycleMappingMetadata>
+		        </configuration>
+		    </plugin>
+		   </plugins>
+	  </pluginManagement>
+      
+  	  <plugins>
+		 <plugin>
+           <inherited>true</inherited>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-compiler-plugin</artifactId>
+   		</plugin>
+		
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+				<archive>
+					<manifest>
+						<mainClass>org.nuclearzone.alarmclock.main.AlarmClock</mainClass>
+						<addClasspath>true</addClasspath>
+						<addExtensions />
+						<classpathPrefix>lib</classpathPrefix>
+					</manifest>
+				</archive>
+			</configuration>
+		</plugin>
+		
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+            	<execution>
+                	<phase>package</phase>
+                    <goals>
+                    	<goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                    	<outputDirectory>${project.build.directory}/lib</outputDirectory>
+                    	<overWriteSnapshots>true</overWriteSnapshots>
+                    </configuration>
+                </execution>
+           </executions>
+       </plugin>
+       
+       <plugin>
+          <groupId>org.dstovall</groupId>
+          <artifactId>onejar-maven-plugin</artifactId>
+          <version>1.4.4</version>
+          <executions>
+              <execution>
+                  <goals>
+                      <goal>one-jar</goal>
+                  </goals>
+              </execution>
+          </executions>
+      </plugin>       
+	</plugins>
+  </build>
+  
+   <pluginRepositories>
+        <pluginRepository>
+            <id>onejar-maven-plugin.googlecode.com</id>
+            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
